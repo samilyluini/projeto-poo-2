@@ -1,5 +1,6 @@
 package visualizacao;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import controle.ControladorLembrete;
@@ -26,7 +27,8 @@ public class Menu {
 		
 		System.out.println("=====================================================");
 		System.out.println("== BEM-VINDO(A) AO NOSSO GERENCIADOR DE LEMBRETES! ==");
-
+		
+		try {
 		do {
 			System.out.println("=====================================================");
 			System.out.println("=========Selecione uma das opções abaixo:============");
@@ -265,51 +267,114 @@ public class Menu {
 				case 4:
 					ler.nextLine();
 					
+					System.out.println("| Opção '1' - Deletar Trabalho                      |");
+					System.out.println("| Opção '2' - Deletar Prova                         |");
+					System.out.println("| Opção '3' - Deletar Outro                         |");
+					int opcao3 = ler.nextInt();
+					
+					ler.nextLine();
+					
 					System.out.println("Digite o texto a ser buscado: ");
 					String texto2 = ler.nextLine();
 					
-					lembrete = controladorLembrete.buscarLembrete(texto2);
-					trabalho = controladorTrabalho.buscarTrabalho(texto2);
-					prova = controladorProva.buscarProva(texto2);
-					
-					if(lembrete != null) {
-						System.out.println("=====================================================");
-						System.out.println(lembrete);
-						System.out.println("=====================================================");
-					}
-					if(trabalho != null) {
-						System.out.println("=====================================================");
-						System.out.println(trabalho);
-						System.out.println("=====================================================");
-					}
-					if(prova != null) {
-						System.out.println("=====================================================");
-						System.out.println(prova);
-						System.out.println("=====================================================");
-					}
-					
-					System.out.println("Tem certeza que deseja excluir este lembrete? (S/N)");
-					String alt2 = ler.nextLine().toUpperCase();
-					
-					if(alt2.equals("S")) {
-						boolean lembreteRemovido;
-						boolean trabalhoRemovido;
-						boolean provaRemovida;
+					switch(opcao3) {
+					case 1:
+						trabalho = controladorTrabalho.buscarTrabalho(texto2);
 						
-						lembreteRemovido=controladorLembrete.removerLembrete(texto2);
-						trabalhoRemovido=controladorTrabalho.removerTrabalho(texto2);
-						provaRemovida=controladorProva.removerProva(texto2);
-						
-						if(lembreteRemovido == true || trabalhoRemovido == true || provaRemovida == true) {
-							System.out.println("Lembrete removido com sucesso!");
+						if(trabalho != null) {
+							System.out.println("=====================================================");
+							System.out.println(trabalho);
+							System.out.println("=====================================================");
+							
+							System.out.println("Tem certeza que deseja excluir este lembrete? (S/N)");
+							String alt2 = ler.nextLine().toUpperCase();
+							
+							if(alt2.equals("S")) {
+								boolean trabalhoRemovido;
+								
+								trabalhoRemovido=controladorTrabalho.removerTrabalho(texto2);
+								
+								if(trabalhoRemovido == true) {
+									System.out.println("Lembrete removido com sucesso!");
+								}
+								
+								
+							}
+							else if(alt2.equals("N")) {
+								break;
+							}
+								
+							else {
+								System.out.println("Opção inexistente!");
+							}
 						}
+						break;
+					case 2:
+						prova = controladorProva.buscarProva(texto2);
 						
-						
-					}
-						
-						else {
-							System.out.println("Opção inexistente!");
+						if(prova != null) {
+							System.out.println("=====================================================");
+							System.out.println(prova);
+							System.out.println("=====================================================");
+							
+							System.out.println("Tem certeza que deseja excluir este lembrete? (S/N)");
+							String alt2 = ler.nextLine().toUpperCase();
+							
+							if(alt2.equals("S")) {
+								boolean provaRemovida;
+								
+								provaRemovida=controladorProva.removerProva(texto2);
+								
+								if(provaRemovida == true) {
+									System.out.println("Lembrete removido com sucesso!");
+								}
+								
+								
+							}
+							else if(alt2.equals("N")) {
+								break;
+							}
+								
+							else {
+								System.out.println("Opção inexistente!");
+							}
 						}
+						break;
+					case 3:
+						lembrete = controladorLembrete.buscarLembrete(texto2);
+						
+						if(lembrete != null) {
+							System.out.println("=====================================================");
+							System.out.println(lembrete);
+							System.out.println("=====================================================");
+							
+							System.out.println("Tem certeza que deseja excluir este lembrete? (S/N)");
+							String alt2 = ler.nextLine().toUpperCase();
+							
+							if(alt2.equals("S")) {
+								boolean lembreteRemovido;
+								
+								lembreteRemovido=controladorLembrete.removerLembrete(texto2);
+								
+								if(lembreteRemovido == true) {
+									System.out.println("Lembrete removido com sucesso!");
+								}
+								
+								
+							}
+							else if(alt2.equals("N")) {
+								break;
+							}
+								
+							else {
+								System.out.println("Opção inexistente!");
+							}
+						}
+						break;
+					default:
+						System.out.println("Opção inexistente!");
+						break;
+					}
 					
 					break;
 
@@ -320,14 +385,11 @@ public class Menu {
 					System.out.println("| Opção '2' - Listar Provas                         |");
 					System.out.println("| Opção '3' - Listar Outros                         |");
 					System.out.println("| Opção '4' - Listar todos                          |");
-					int opcao3 = ler.nextInt();
+					int opcao4 = ler.nextInt();
 					
 					ler.nextLine();
 					
-					System.out.println("Digite o texto a ser buscado: ");
-					String texto3 = ler.nextLine();
-					
-						switch(opcao3) {
+						switch(opcao4) {
 							case 1:
 								System.out.println("===================== TRABALHOS ====================");
 								controladorTrabalho.listarTrabalhos();
@@ -367,7 +429,10 @@ public class Menu {
 			System.out.println("=====================================================");
 			System.out.println("===========OBRIGADO POR USAR O PROGRAMA!=============");
 			System.out.println("=====================================================");
-		}
-
+	} catch (InputMismatchException e) {
+		System.out.println("Insira um tipo inteiro");
+	}// try catch
 	}
+		
+}
 
